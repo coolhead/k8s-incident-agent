@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+runs/
+local/runs/
+llm_agent/runs/
+
+# env
+.env
+.env.*
