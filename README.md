@@ -28,6 +28,13 @@ The agent follows a strict operational loop:
 - No hidden automation. 
 - No speculative execution.
 
+
+## Who this is for
+
+- SREs and platform engineers exploring safe agentic operations
+- MLOps engineers working in regulated or high-risk environments
+- Practitioners who value explainability over automation speed
+
 ---
 
 ## Core design principles
@@ -45,7 +52,7 @@ These constraints are intentional and foundational.
 
 ## Modes of operation
 
-## Deterministic local agent (default)
+### Deterministic local agent (default)
 
 - Rule-based triage using Kubernetes signals
 - Fast, predictable, and safe
@@ -55,7 +62,7 @@ These constraints are intentional and foundational.
 make agent-run
 ```
 
-## LLM-assisted agent (optional)
+### LLM-assisted agent (optional)
 
 - Uses a local LLM via Ollama
 - Improves diagnosis, classification, and action ranking
@@ -71,7 +78,7 @@ make llm-run-approve
 The LLM is a reasoning assistant, not an operator.
 
 
-## LLM integration (Ollama)
+### LLM integration (Ollama)
 
 - Provider: Ollama (local)
 - Models tested: qwen2.5:7b, llama3.1:8b
@@ -129,6 +136,9 @@ Health is determined using:
 ---
 
 ## Repository structure
+
+_Local and LLM-assisted agents share the same safety model but differ only in reasoning strategy._
+
 ```
 k8s-incident-agent/
 ├── local/
@@ -153,6 +163,33 @@ k8s-incident-agent/
 ├── Makefile
 └── README.md
 ```
+---
+## What happens on a real incident?
+
+This mirrors how a real on-call incident would be handled in a production Kubernetes environment.
+
+Example: a Deployment enters `CrashLoopBackOff`.
+
+1. Agent runs in read-only mode and collects evidence  
+   (pod status, container states, events, logs)
+
+2. Incident is classified based on Kubernetes signals  
+   (not just Pod phase)
+
+3. A remediation plan is proposed  
+   (e.g. restart, config patch) — **dry-run only**
+
+4. Policy engine validates scope, risk, and allowlist
+
+5. Human explicitly approves the action (`--approve`)
+
+6. Approved action is executed via controlled tooling
+
+7. Post-action verification confirms recovery
+
+8. An immutable audit record is written
+
+
 ---
 ## Quick start
 ```
@@ -219,8 +256,8 @@ Correctness, safety, and explainability take precedence.
 - Structured post-incident reports
 
 ---
-This project intentionally favors restraint.
+This project intentionally favors restraint over automation.
 
-That is what makes it production-appropriate.
+**That is what makes it production-appropriate.**
 
 
