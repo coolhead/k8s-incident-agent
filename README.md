@@ -239,7 +239,7 @@ Every approved remediation produces a structured JSON record:
 ```
 Audit logs enable traceability, accountability, and post-incident analysis.
 
-See [`docs/example-incident.md`](docs/example-incident.md) for a full incident walkthrough and the corresponding audit record.
+- See [`docs/example-incident.md`](docs/example-incident.md) for a full incident walkthrough and the corresponding audit record.
 ---
 ## Non-goals
 
