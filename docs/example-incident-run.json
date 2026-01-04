@@ -1,0 +1,8 @@
+{
+  "ts": "20260104-084855",
+  "namespace": "demo",
+  "action": "patch_command",
+  "target": "deploy/crashy",
+  "ok": true,
+  "details": "deployment.apps/crashy patched"
+}

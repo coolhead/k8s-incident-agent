@@ -82,10 +82,10 @@ agent-delete-crashy-approve: deps ## Delete crashy pod (executes)
 	$(PYTHON) -m agent.remediate delete-pod patch-command -n $(NAMESPACE) -p $$POD --approve
 
 agent-fix-crashy: deps ## Patch crashy deployment command (dry-run)
-	@$(PYTHON) -m agent.remediate patch-command -n $(NAMESPACE) -d crashy
+	@PYTHONPATH=local $(PYTHON) -m agent.remediate patch-command -n $(NAMESPACE) -d crashy
 
 agent-fix-crashy-approve: deps ## Patch crashy deployment command (executes)
-	@$(PYTHON) -m agent.remediate patch-command -n $(NAMESPACE) -d crashy --approve
+	@PYTHONPATH=local $(PYTHON) -m agent.remediate patch-command -n $(NAMESPACE) -d crashy --approve
 
 
 local-agent-run: deps ## Run local triage agent
